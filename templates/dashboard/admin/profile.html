@@ -1,0 +1,181 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - My Profile
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/profile.css' %}"
+>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h1>My Profile</h1>
+
+        <p>
+            Manage your personal information and account details.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE CARD -->
+
+    <div class="profile-card">
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="profile-avatar-container">
+
+                <div class="profile-avatar">
+
+                    <img
+                        src="{% static 'images/avatar.png' %}"
+                        alt="Admin Avatar"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-heading">
+
+                <h2>{{ admin.name }}</h2>
+
+                <p>Administrator</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="profile-section">
+
+            <form
+                method="POST"
+                class="profile-form"
+            >
+
+                {% csrf_token %}
+
+                <div class="profile-info-grid">
+
+                    <!-- NAME -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ admin.name }}"
+                            class="edit-input"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ admin.email }}"
+                            class="edit-input"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            value="{{ admin.phone }}"
+                            class="edit-input"
+                        >
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Role
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Administrator"
+                            class="edit-input"
+                            disabled
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="profile-actions">
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        <i class="bi bi-check-lg"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

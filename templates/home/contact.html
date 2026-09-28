@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Contact - LearnHub
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/contact.css' %}"
+>
+{% endblock %} 
+
+{% block content %}
+<section class="contact-section py-5">
+  <div class="container">
+    <div class="contact-header">
+      <h1>Get in Touch with <span>LearnHub</span></h1>
+      <p>
+        Have questions about courses, certifications, or partnership
+        opportunities? Reach out to our academic and support teams.
+      </p>
+    </div>
+
+    <!-- Contact -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-6 col-md-8">
+        <h3 class="h5 fw-bold text-dark mb-1 text-center">
+          Contact Information
+        </h3>
+        <p class="contact-subtitle text-center mb-4">
+          We typically respond to academic inquiries within 24–48 business
+          hours.
+        </p>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <div class="info-content">
+            <label>Email Us</label>
+            <a href="mailto:poojathiwari52@gmail.com"
+              >poojathiwari52@gmail.com</a
+            >
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="bi bi-telephone"></i>
+          </div>
+          <div class="info-content">
+            <label>Call Academic Support</label>
+            <p class="text-muted-custom">+1 (555) 234-5678</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="bi bi-geo-alt"></i>
+          </div>
+          <div class="info-content">
+            <label>Campus HQ Address</label>
+            <p class="text-muted-custom">100 Education Way, Boston, MA 02111</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join Course -->
+<section class="cta-section my-5">
+  <div class="container text-center">
+    <h2>Start learning today.</h2>
+    <p>
+      Join thousands of students achieving academic excellence and building
+      their futures with LearnHub.
+    </p>
+    <a href="{% url 'courses' %}" class="btn btn-primary mt-2">
+    Explore Courses
+</a>
+  </div>
+</section>
+
+{% endblock %}

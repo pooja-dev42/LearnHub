@@ -1,0 +1,227 @@
+.course-hero-section {
+  background: var(--white);
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.course-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.course-detail-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  letter-spacing: -0.3px;
+}
+
+.course-detail-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.course-meta {
+  display: inline-flex;
+  align-items: center;
+  background: #eff6ff;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(8, 100, 199, 0.15);
+}
+
+.course-price-box {
+  margin-bottom: 1.5rem;
+}
+
+.course-fee-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.course-price {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+}
+
+.course-price i {
+  color: var(--primary);
+}
+
+.enroll-btn {
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 7px;
+  transition: all 0.2s ease;
+}
+
+/* Hero Image Styling */
+.course-hero-img-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
+.course-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.course-hero-img-wrapper:hover .course-hero-img {
+  transform: scale(1.02);
+}
+
+.no-course-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  color: var(--text-muted);
+  background: #e2e8f0;
+}
+.course-body-section {
+  padding: 3.5rem 0;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+/* Subject Card Styles */
+.subject-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.subject-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.subject-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.subject-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.subject-lessons {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+
+/* Instructor Sidebar Card */
+.instructor-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.instructor-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.instructor-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.instructor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(8, 100, 199, 0.15);
+}
+
+.instructor-info h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.instructor-info p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .course-detail-title {
+    font-size: 1.85rem;
+  }
+
+  .course-hero-section,
+  .course-body-section {
+    padding: 2.5rem 0;
+  }
+
+  .instructor-card {
+    position: static;
+    margin-top: 1rem;
+  }
+}

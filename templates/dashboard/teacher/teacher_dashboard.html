@@ -1,0 +1,50 @@
+{% extends "dashboard/teacher_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - Teacher Dashboard
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="welcome-card">
+  <div>
+    <h2>Welcome back, {{ teacher.name }}!</h2>
+    <p>Check your students' submissions and manage their grades.</p>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">
+      <i class="bi bi-book"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-label">My Subjects</span>
+      <h3>{{ my_subjects }}</h3>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon">
+      <i class="bi bi-file-earmark-text"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-label">Quiz Submissions</span>
+      <h3>{{ quiz_submissions }}</h3>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon">
+      <i class="bi bi-file-earmark-check"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-label">Assignment Submissions</span>
+      <h3>{{ assignment_submissions }}</h3>
+    </div>
+  </div>
+</div>
+{% endblock %}

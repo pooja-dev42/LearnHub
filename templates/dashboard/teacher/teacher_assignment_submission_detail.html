@@ -1,0 +1,112 @@
+{% extends "dashboard/teacher_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - Teacher Dashboard
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="assignment-detail">
+  <div class="page-header">
+    <h1>Review Assignment Submission</h1>
+    <p>Review the student's assignment and give a grade.</p>
+  </div>
+
+  <div class="assignment-info-card">
+    <div class="section-title">
+      <h2>Assignment Information</h2>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Student</span>
+        <span class="info-value">{{ submission.student.name }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Assignment Name</span>
+        <span class="info-value"
+          >{{ submission.assignment.assignment_name }}</span
+        >
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Subject</span>
+        <span class="info-value">{{ submission.assignment.subject.name }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Passing Score</span>
+        <span class="info-value"
+          >{{ submission.assignment.passing_score }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="answer-card">
+    <div class="section-title">
+      <h2>Student Answer</h2>
+      <p>Review the uploaded assignment file.</p>
+    </div>
+
+    <div class="file-box">
+      <div class="file-icon">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </div>
+
+      <div class="file-info">
+        <h3>{{ submission.answer_pdf.name }}</h3>
+        <span>PDF Document</span>
+      </div>
+
+      <a href="{{ submission.answer_pdf.url }}" class="pdf-btn" target="_blank">
+        <i class="bi bi-eye"></i>
+        View PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="grading-card">
+    <div class="section-title">
+      <h2>Grade Assignment</h2>
+      <p>Enter the student's score.</p>
+    </div>
+
+    <form method="POST" class="grading-form">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="score">Score</label>
+
+        <div class="score-input">
+          <input
+            type="number"
+            id="score"
+            name="score"
+            min="0"
+            max="100"
+            value="{{ submission.score|default:'' }}"
+            placeholder="Enter score"
+            required />
+          <span>/ 100</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a href="{% url 'teacher_assignment_submissions' %}" class="cancel-btn">
+          Cancel
+        </a>
+
+        <button type="submit" class="submit-btn">
+          <i class="bi bi-check-lg"></i>
+          Submit Grade
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

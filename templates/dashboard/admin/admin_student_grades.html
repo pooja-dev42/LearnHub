@@ -1,0 +1,78 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Student Grades{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid admin-grades">
+    <div class="admin-grades-header">
+        <div>
+            <h2>Student Grades</h2>
+            <p>View quiz and assignment grades of students.</p>
+        </div>
+    </div>
+
+    <div class="admin-grades-card">
+        <div class="admin-grades-toolbar">
+            <form method="GET" class="admin-grades-toolbar">
+                <div class="grades-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search" value="{{ search }}" placeholder="Search student...">
+                </div>
+                <button type="submit">Search</button>
+                <select name="course" class="grades-filter" onchange="this.form.submit()">
+                    <option value="" {% if course == "" %}selected{% endif %}>All Courses</option>
+                    {% for course_item in courses %}
+                    <option value="{{ course_item.id }}" {% if course == course_item.id|stringformat:"s" %}selected{% endif %}>
+                        {{ course_item.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <div class="grade-table-wrapper">
+            <table class="grade-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Quiz</th>
+                        <th>Assignment</th>
+                        <th>Average</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in grades %}
+                    <tr>
+                        <td><span class="grade-student">{{ item.student.name }}</span></td>
+                        <td><span class="subject-badge">{{ item.subject.name }}</span></td>
+                        <td>
+                            <span class="grade-score">
+                                {% if item.quiz_average is not None %}{{ item.quiz_average }}{% else %}-{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="grade-score">
+                                {% if item.assignment_average is not None %}{{ item.assignment_average }}{% else %}-{% endif %}
+                            </span>
+                        </td>
+                        <td><span class="grade-average">{{ item.average }}</span></td>
+                        <td><span class="grade">{{ item.grade }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-grades">No grades found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

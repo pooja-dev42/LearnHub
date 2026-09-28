@@ -1,0 +1,102 @@
+{% extends "dashboard/teacher_dashboard_base.html" %}
+{% load static %}
+{% block title %}
+LearnHub - Review Quiz Submission
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="quiz-detail-page">
+  <div class="page-header">
+    <h1>Review Quiz Submission</h1>
+    <p>Review the student's answers and provide a grade.</p>
+  </div>
+
+  <div class="detail-card">
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Student</span>
+        <span class="info-value">{{ submission.student.name }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Quiz Name</span>
+        <span class="info-value">{{ submission.quiz.quiz_name }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Subject</span>
+        <span class="info-value">{{ submission.quiz.subject.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-card">
+    <div class="card-header">
+      <div>
+        <h2>Student Answer</h2>
+        <p>View the student's submitted answer PDF.</p>
+      </div>
+    </div>
+
+    <div class="pdf-box">
+      <div class="pdf-icon">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </div>
+
+      <div class="pdf-info">
+        <h3>{{ submission.answer_pdf.name }}</h3>
+        <span>PDF Document</span>
+      </div>
+
+      <a href="{{ submission.answer_pdf.url }}" class="download-btn">
+        <i class="bi bi-download"></i>
+        View PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="detail-card">
+    <div class="card-header">
+      <div>
+        <h2>Grade Submission</h2>
+        <p>Enter the student's score and feedback.</p>
+      </div>
+    </div>
+
+    <form method="POST" class="grading-form">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="score">Score</label>
+
+        <div class="score-input">
+          <input
+            type="number"
+            id="score"
+            name="score"
+            min="0"
+            max="100"
+            value="{{ submission.score|default:'' }}"
+            placeholder="Enter score" />
+
+          <span>%</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a href="{% url 'teacher_quiz_submissions' %}" class="cancel-btn">
+          Cancel
+        </a>
+
+        <button type="submit" class="grade-btn">
+          <i class="bi bi-check-lg"></i>
+          Submit Grade
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

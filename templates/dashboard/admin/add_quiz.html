@@ -1,0 +1,91 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Add Quiz{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="mb-4">
+    <h2>Add Quiz</h2>
+    <p>Create a new quiz for a subject.</p>
+  </div>
+
+  <div class="card p-4">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Subject -->
+      <div class="mb-3">
+        <label class="form-label"> Subject </label>
+
+        <select name="subject" class="form-select" required>
+          <option value="">Select Subject</option>
+
+          {% for subject in subjects %}
+
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Quiz Name -->
+      <div class="mb-3">
+        <label class="form-label"> Quiz Name </label>
+
+        <input
+          type="text"
+          name="quiz_name"
+          class="form-control"
+          placeholder="Enter quiz name"
+          required />
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label"> Description </label>
+
+        <textarea
+          name="description"
+          class="form-control"
+          rows="4"
+          placeholder="Enter quiz description"></textarea>
+      </div>
+
+      <!-- Passing Score -->
+      <div class="mb-3">
+        <label class="form-label"> Passing Score </label>
+
+        <input
+          type="number"
+          name="passing_score"
+          class="form-control"
+          placeholder="Example: 60"
+          min="0"
+          max="100"
+          required />
+      </div>
+
+      <!-- Question PDF -->
+      <div class="mb-4">
+        <label class="form-label"> Question PDF </label>
+
+        <input
+          type="file"
+          name="question_pdf"
+          class="form-control"
+          accept=".pdf"
+          required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add Quiz</button>
+
+      <a href="{% url 'admin_quizzes' %}" class="btn btn-secondary"> Cancel </a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

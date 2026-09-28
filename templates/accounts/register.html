@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - Register
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="auth-body">
+  <div class="auth-page-wrapper">
+    <div class="auth-card">
+      <div class="row g-0 align-items-stretch">
+        <!-- LEFT IMAGE -->
+
+        <div class="col-lg-6 auth-left-panel">
+          <img
+            src="{% static 'images/Login.png' %}"
+            alt="Person sitting at desk working on laptop"
+            class="auth-illustration-img" />
+        </div>
+
+        <div class="col-lg-6 auth-right-panel d-flex align-items-center">
+          <div class="auth-form-box">
+            <h1 class="auth-title">Create Account</h1>
+
+            <p class="auth-subtitle">
+              Create your account and start learning with LearnHub.
+            </p>
+
+            <form action="{% url 'register' %}" method="POST" class="auth-form">
+              {% csrf_token %}
+
+              <!-- Name -->
+
+              <div class="form-group-custom">
+                <label for="name" class="form-label-custom"> Name </label>
+
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-input-custom"
+                  required />
+              </div>
+
+              <!-- Email -->
+
+              <div class="form-group-custom">
+                <label for="email" class="form-label-custom">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input-custom"
+                  required />
+              </div>
+
+              <!-- Password -->
+
+              <div class="form-group-custom">
+                <label for="password" class="form-label-custom">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-input-custom"
+                  required />
+              </div>
+
+              <!-- Phone -->
+
+              <div class="form-group-custom">
+                <label for="phone" class="form-label-custom"> Phone </label>
+
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-input-custom" />
+              </div>
+
+              <!-- Register Button -->
+
+              <button type="submit" class="btn-auth-primary">Register</button>
+            </form>
+
+            <!-- Login Link -->
+
+            <div class="auth-footer text-center">
+              Already have an account?
+
+              <a href="{% url 'login' %}"> Login </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

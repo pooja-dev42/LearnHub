@@ -1,0 +1,136 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid admin-dashboard">
+
+    <!-- Page Header -->
+    <div class="admin-dashboard-header">
+        <h2>Admin Dashboard</h2>
+
+        <p>
+            Manage LearnHub students, teachers, courses and learning content.
+        </p>
+    </div>
+
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+
+        <!-- Students -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card admin-stat-card h-100">
+                <div class="card-body">
+
+                    <div class="admin-stat-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <h6 class="admin-stat-title">
+                        Students
+                    </h6>
+
+                    <h2 class="admin-stat-number">
+                        {{ total_students }}
+                    </h2>
+
+                    <p class="admin-stat-description">
+                        Registered students
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Teachers -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card admin-stat-card h-100">
+                <div class="card-body">
+
+                    <div class="admin-stat-icon">
+                        <i class="bi bi-person-workspace"></i>
+                    </div>
+
+                    <h6 class="admin-stat-title">
+                        Teachers
+                    </h6>
+
+                    <h2 class="admin-stat-number">
+                        {{ total_teachers }}
+                    </h2>
+
+                    <p class="admin-stat-description">
+                        Registered teachers
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Courses -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card admin-stat-card h-100">
+                <div class="card-body">
+
+                    <div class="admin-stat-icon">
+                        <i class="bi bi-book-fill"></i>
+                    </div>
+
+                    <h6 class="admin-stat-title">
+                        Courses
+                    </h6>
+
+                    <h2 class="admin-stat-number">
+                        {{ total_courses }}
+                    </h2>
+
+                    <p class="admin-stat-description">
+                        Available courses
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Subjects -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card admin-stat-card h-100">
+                <div class="card-body">
+
+                    <div class="admin-stat-icon">
+                        <i class="bi bi-journals"></i>
+                    </div>
+
+                    <h6 class="admin-stat-title">
+                        Subjects
+                    </h6>
+
+                    <h2 class="admin-stat-number">
+                        {{ total_subjects }}
+                    </h2>
+
+                    <p class="admin-stat-description">
+                        Total subjects
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

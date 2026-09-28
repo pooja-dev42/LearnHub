@@ -1,0 +1,102 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Lesson Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid admin-lessons">
+  <!-- Page Header -->
+  <div class="lesson-page-header">
+    <div>
+      <h2>Lesson Management</h2>
+      <p>Create and manage lessons for LearnHub subjects.</p>
+    </div>
+    <a href="{% url 'add_lesson' %}" class="add-lesson-btn">
+      <i class="bi bi-plus-lg"></i>
+      Add Lesson
+    </a>
+  </div>
+
+  <!-- Lesson Management Card -->
+  <div class="lesson-management-card">
+    <!-- Search / Filter -->
+    <div class="lesson-toolbar">
+      <form method="GET" class="lesson-toolbar">
+        <div class="lesson-search">
+          <i class="bi bi-search"></i>
+          <input type="text" name="search" value="{{ search }}" placeholder="Search lessons...">
+        </div>
+        <button type="submit">Search</button>
+        <select name="subject" class="lesson-filter" onchange="this.form.submit()">
+          <option value="" {% if subject == "" %}selected{% endif %}>All Subjects</option>
+          {% for subject_item in subjects %}
+          <option value="{{ subject_item.id }}" {% if subject == subject_item.id|stringformat:"s" %}selected{% endif %}>
+            {{ subject_item.name }}
+          </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    <!-- Lesson Table -->
+    <div class="lesson-table-wrapper">
+      <table class="lesson-table">
+        <thead>
+          <tr>
+            <th>Lesson</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Video Link</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lesson in lessons %}
+          <tr>
+            <!-- Lesson -->
+            <td>
+              <div class="lesson-name">
+                <span>{{ lesson.lesson_name }}</span>
+              </div>
+            </td>
+            <!-- Subject -->
+            <td>
+              <span class="subject-badge">{{ lesson.subject.name }}</span>
+            </td>
+            <!-- Description -->
+            <td>
+              <div class="lesson-description">{{ lesson.description }}</div>
+            </td>
+            <!-- Video Link -->
+            <td>
+              <a href="{{ lesson.link }}" target="_blank" class="lesson-video-link">
+                {{ lesson.link }}
+              </a>
+            </td>
+            <!-- Actions -->
+            <td>
+              <div class="lesson-actions">
+                <a href="{% url 'edit_lesson' lesson.id %}" class="lesson-action edit" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <a href="{% url 'delete_lesson' lesson.id %}" class="lesson-action delete" title="Delete" onclick="return confirm('Are you sure you want to delete this lesson?');">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="empty-lessons">No lessons found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

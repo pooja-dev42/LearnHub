@@ -1,0 +1,104 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+{% block title %}
+LearnHub - Student Dashboard
+{% endblock %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/student.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="student-dashboard">
+
+    <!-- Welcome -->
+    <div class="welcome-heading">
+
+        <div>
+
+            <h1>
+                Welcome back, {{ student.name }} 👋
+            </h1>
+
+            <p>
+                Continue your learning journey and keep making progress.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-cards">
+
+        <!-- Enrolled Courses -->
+        <div class="lms-card">
+
+            <div class="card-top">
+
+                <span>Enrolled Courses</span>
+
+                <div class="icon-box blue-box">
+                    <i class="bi bi-book"></i>
+                </div>
+
+            </div>
+
+            <div class="card-metric">
+                {{ enrolled_courses }}
+            </div>
+
+        </div>
+
+
+        <!-- Completed Courses -->
+        <div class="lms-card">
+
+            <div class="card-top">
+
+                <span>Completed Courses</span>
+
+                <div class="icon-box green-box">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+
+            </div>
+
+            <div class="card-metric">
+                {{ completed_courses }}
+            </div>
+
+        </div>
+
+
+        <!-- Certificates -->
+        <div class="lms-card">
+
+            <div class="card-top">
+
+                <span>Certificates</span>
+
+                <div class="icon-box purple-box">
+                    <i class="bi bi-award"></i>
+                </div>
+
+            </div>
+
+            <div class="card-metric">
+                {{ certificates }}
+            </div>
+
+        </div>
+
+    </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

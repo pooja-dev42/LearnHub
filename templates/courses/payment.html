@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% load static %} {% block title %} LearnHub -
+Payments {% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}" />
+{% endblock %} {% block content %}
+<section class="payment-section">
+  <div class="container">
+    <div class="payment-header">
+      <h1>Complete Your Enrollment</h1>
+      <p>Complete your payment to enroll in this course.</p>
+    </div>
+
+    <div class="payment-card">
+      <!-- Course Information -->
+      <div class="course-info">
+        <span class="section-label">Course</span>
+
+        <h2>{{ course.name }}</h2>
+
+        <div class="course-price">{{ course.price }}MMK</div>
+      </div>
+
+      <!-- Payment Form -->
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h3>Payment Information</h3>
+
+        <!-- Payment Method -->
+        <div class="form-group">
+          <label> Payment Method </label>
+
+          <div class="payment-options">
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment_type"
+                value="kbz_pay"
+                required />
+
+              <span>KBZ Pay</span>
+            </label>
+
+            <label class="payment-option">
+              <input type="radio" name="payment_type" value="wave_money" />
+
+              <span>Wave Money</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Transaction ID -->
+        <div class="form-group">
+          <label for="transaction_id"> Transaction ID </label>
+
+          <input
+            type="text"
+            id="transaction_id"
+            name="transaction_id"
+            placeholder="Enter your transaction ID"
+            required />
+        </div>
+
+        <!-- Receipt -->
+        <div class="form-group">
+          <label for="receipt_image"> Payment Receipt </label>
+
+          <input
+            type="file"
+            id="receipt_image"
+            name="receipt_image"
+            accept="image/*"
+            required />
+
+          <small> Upload a clear image of your payment receipt. </small>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="payment-submit">Submit Payment</button>
+
+        <p class="payment-note">
+          Your payment will be reviewed by an administrator.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

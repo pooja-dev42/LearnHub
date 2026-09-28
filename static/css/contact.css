@@ -1,0 +1,133 @@
+.contact-section {
+  padding: 80px 0;
+  background-color: #f8fafc;
+}
+
+.contact-header {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-header h1 {
+  margin-bottom: 18px;
+  color: #1f2937;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.contact-header h1 span {
+  color: #0864c7;
+}
+.contact-header p {
+  margin: 0 auto;
+  max-width: 650px;
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.contact-subtitle {
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+  padding: 22px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+.info-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0864c7;
+  background-color: #eaf3ff;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+.info-content {
+  display: flex;
+  flex-direction: column;
+}
+.info-content label {
+  margin-bottom: 5px;
+  color: #1f2937;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.info-content a {
+  color: #0864c7;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+.info-content a:hover {
+  text-decoration: underline;
+}
+.text-muted-custom {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.cta-section {
+  padding: 70px 0;
+  background-color: #ffffff;
+}
+.cta-section h2 {
+  margin-bottom: 15px;
+  color: #1f2937;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.cta-section p {
+  max-width: 650px;
+  margin: 0 auto 20px;
+  color: #6b7280;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+.cta-section .btn {
+  padding: 11px 25px;
+  border-radius: 7px;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .contact-section {
+    padding: 60px 0;
+  }
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+  .contact-header p {
+    font-size: 0.95rem;
+  }
+  .info-card {
+    padding: 18px;
+  }
+  .info-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+  .cta-section {
+    padding: 60px 0;
+  }
+  .cta-section h2 {
+    font-size: 1.7rem;
+  }
+}

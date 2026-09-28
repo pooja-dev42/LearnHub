@@ -1,0 +1,245 @@
+
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - Grades
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/student.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="grades-page">
+
+    <div class="page-header">
+
+        <h1>Grades</h1>
+
+        <p>
+            View your quiz and assignment performance for each subject.
+        </p>
+
+    </div>
+
+<div class="filter-card">
+
+    <form method="get" class="filter-row">
+
+        <!-- Search by Subject -->
+
+        <div class="filter-search">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search subject name..."
+                value="{{ search }}"
+            >
+
+        </div>
+
+
+        <!-- Course Filter -->
+
+        <div class="filter-group">
+
+            <select name="course">
+
+                <option value="">
+                    All Courses
+                </option>
+
+                {% for course in courses %}
+
+                    <option
+                        value="{{ course.id }}"
+                        {% if course_id == course.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ course.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- Search Button -->
+
+        <div class="filter-actions">
+
+            <button
+                type="submit"
+                class="filter-btn"
+            >
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+    <!-- Grades Table -->
+
+    <div class="grades-card">
+
+        <div class="table-responsive">
+
+            <table class="grades-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Subject</th>
+                        <th>Quiz Score</th>
+                        <th>Assignment Score</th>
+                        <th>Overall Grade</th>
+                        <th>Badge</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in grade_data %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ item.subject.name }}
+                            </strong>
+                        </td>
+
+
+                        <td>
+
+                            {% if item.quiz_score is not None %}
+
+                                {{ item.quiz_score|floatformat:0 }}%
+
+                            {% else %}
+
+                                Not graded yet
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.assignment_score is not None %}
+
+                                {{ item.assignment_score|floatformat:0 }}%
+
+                            {% else %}
+
+                                Not graded yet
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.overall is not None %}
+
+                                <strong>
+                                    {{ item.overall|floatformat:0 }}%
+                                </strong>
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.grade == "A+" %}
+
+                                <span class="grade-badge grade-aplus">
+                                    A+
+                                </span>
+
+                            {% elif item.grade == "A" %}
+
+                                <span class="grade-badge grade-a">
+                                    A
+                                </span>
+
+                            {% elif item.grade == "B+" %}
+
+                                <span class="grade-badge grade-bplus">
+                                    B+
+                                </span>
+
+                            {% elif item.grade == "B" %}
+
+                                <span class="grade-badge grade-b">
+                                    B
+                                </span>
+
+                            {% elif item.grade == "C" %}
+
+                                <span class="grade-badge grade-c">
+                                    C
+                                </span>
+
+                            {% elif item.grade == "F" %}
+
+                                <span class="grade-badge grade-f">
+                                    F
+                                </span>
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5">
+                            No grades available yet.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

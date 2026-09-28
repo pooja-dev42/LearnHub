@@ -1,0 +1,102 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    LearnHub - Assignment Details
+{% endblock %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/student.css' %}"
+>
+{% endblock %}
+{% block content %}
+<div class="assignment-detail-page">
+  <div class="page-header">
+    <a href="{% url 'assignment' %}" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Back to Assignments
+    </a>
+  </div>
+  <div class="assignment-detail-card">
+    <div class="assignment-detail-header">
+      <div>
+        <h1>{{ assignment.assignment_name }}</h1>
+      </div>
+    </div>
+    <div class="assignment-section">
+      <h3>Description</h3>
+      <p>{{ assignment.description }}</p>
+    </div>
+    <div class="assignment-info">
+      <div class="info-item">
+        <span class="info-label"> Passing Score </span>
+        <strong> {{ assignment.passing_score }} </strong>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label"> Subject </span>
+
+        <strong> {{ assignment.subject.name }} </strong>
+      </div>
+    </div>
+
+    <div class="assignment-section">
+      <h3>Assignment PDF</h3>
+
+      <div class="pdf-box">
+        <div class="pdf-icon">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+        </div>
+
+        <div class="pdf-info">
+          <strong> {{ assignment.question_pdf.name }} </strong>
+
+          <span> Assignment instructions and questions </span>
+        </div>
+
+        <a
+          href="{{ assignment.question_pdf.url }}"
+          class="download-btn"
+          target="_blank">
+          <i class="bi bi-download"></i>
+          View PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="assignment-section">
+      <h3>Submit Your Answer</h3>
+
+      <p class="section-description">
+        Upload your completed assignment as a PDF file.
+      </p>
+
+      <form
+        action="{% url 'assignment_detail' assignment_id=assignment.id %}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="answer-form">
+        {% csrf_token %}
+
+        <div class="upload-box">
+          <h4>Upload Answer PDF</h4>
+
+          <input
+            type="file"
+            name="answer_pdf"
+            accept=".pdf"
+            class="file-input"
+            required />
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="bi bi-send"></i>
+
+          Submit Answer
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

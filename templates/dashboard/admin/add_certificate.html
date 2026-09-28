@@ -1,0 +1,67 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Add Certificate{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2>Add Certificate</h2>
+        <p>Issue a certificate to a LearnHub student.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Student -->
+                <div class="mb-3">
+                    <label class="form-label">Student</label>
+                    <select name="student" class="form-select" required>
+                        <option value="">Select Student</option>
+                        {% for student in students %}
+                            <option value="{{ student.id }}">{{ student.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Course -->
+                <div class="mb-3">
+                    <label class="form-label">Course</label>
+                    <select name="course" class="form-select" required>
+                        <option value="">Select Course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Issued Date -->
+                <div class="mb-3">
+                    <label class="form-label">Issued Date</label>
+                    <input type="date" name="issued_date" class="form-control" required>
+                </div>
+
+                <!-- Certificate File -->
+                <div class="mb-4">
+                    <label class="form-label">Certificate File</label>
+                    <input type="file" name="certificate_file" class="form-control" accept=".pdf" required>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Add Certificate
+                    </button>
+                    <a href="{% url 'admin_certificates' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

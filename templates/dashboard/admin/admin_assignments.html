@@ -1,0 +1,116 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Assignment Management{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid admin-assignments">
+    <div class="assignment-page-header">
+        <div>
+            <h2>Assignment Management</h2>
+            <p>Create and manage assignments for LearnHub subjects.</p>
+        </div>
+
+        <a href="{% url 'add_assignment' %}" class="add-assignment-btn">
+            <i class="bi bi-plus-lg"></i>
+            Add Assignment
+        </a>
+    </div>
+
+    <div class="assignment-management-card">
+        <div class="assignment-toolbar">
+            <form method="GET" class="assignment-toolbar">
+                <div class="assignment-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search" value="{{ search }}" placeholder="Search assignments...">
+                </div>
+
+                <button type="submit">
+                    Search
+                </button>
+
+                <select name="subject" class="assignment-filter" onchange="this.form.submit()">
+                    <option value="" {% if subject == "" %}selected{% endif %}>
+                        All Subjects
+                    </option>
+
+                    {% for subject_item in subjects %}
+                    <option value="{{ subject_item.id }}" {% if subject == subject_item.id|stringformat:"s" %}selected{% endif %}>
+                        {{ subject_item.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <!-- Table -->
+        <div class="assignment-table-wrapper">
+            <table class="assignment-table">
+                <thead>
+                    <tr>
+                        <th>Assignment</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Passing Score</th>
+                        <th>Question PDF</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for assignment in assignments %}
+                    <tr>
+                        <td>
+                            <div class="assignment-name">
+                                <span>{{ assignment.assignment_name }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="subject-badge">{{ assignment.subject.name }}</span>
+                        </td>
+                        <td>
+                            <div class="assignment-description">
+                                {{ assignment.description }}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="passing-score">
+                                {{ assignment.passing_score }}%
+                            </span>
+                        </td>
+                        <td>
+                            {% if assignment.question_pdf %}
+                            <a href="{{ assignment.question_pdf.url }}" class="pdf-link" target="_blank">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                                View PDF
+                            </a>
+                            {% else %}
+                            <span>No PDF</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="assignment-actions">
+
+                                <a href="{% url 'edit_assignment' assignment.id %}" class="assignment-action edit" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <a href="{% url 'delete_assignment' assignment.id %}" class="assignment-action delete" title="Delete" onclick="return confirm('Are you sure you want to delete this lesson?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-assignments">No assignments found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

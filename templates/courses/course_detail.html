@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ course.name }} - LearnHub
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/course_detail.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<section class="course-hero-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Course Information -->
+      <div class="col-lg-6">
+        <div class="course-hero-content">
+          <h1 class="course-detail-title">{{ course.name }}</h1>
+
+          <p class="course-detail-desc">{{ course.description }}</p>
+
+          <div class="course-meta mb-4">
+            <i class="bi bi-book me-2"></i>
+            {{ course.subjects.count }} Subjects
+          </div>
+
+          <div class="course-price-box">
+            <span class="course-fee-label"> COURSE FEE </span>
+
+            <div class="course-price">
+              <i class="bi bi-cash-stack me-2"></i>
+              {{ course.price }} MMK
+            </div>
+          </div>
+
+          <a
+            href="{% url 'payment' course.id %}"
+            class="btn btn-primary enroll-btn">
+            Enroll Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Course Image -->
+      <div class="col-lg-6">
+        <div class="course-hero-img-wrapper">
+          {% if course.image %}
+          <img
+            src="{{ course.image.url }}"
+            alt="{{ course.name }}"
+            class="course-hero-img" />
+          {% else %}
+          <div class="no-course-image">
+            <i class="bi bi-image"></i>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="course-body-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <h2 class="section-title">Subjects Included</h2>
+
+        <div class="row g-4">
+          {% for subject in course.subjects.all %}
+
+          <div class="col-md-6">
+            <div class="subject-card">
+              <h3>{{ subject.name }}</h3>
+
+              <p>{{ subject.description }}</p>
+
+              <div class="subject-lessons">
+                <i class="bi bi-play-circle me-1"></i>
+
+                {{ subject.lesson_set.count }} Lessons
+              </div>
+            </div>
+          </div>
+
+          {% empty %}
+
+          <p>No subjects added yet.</p>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="instructor-card">
+          <h3 class="instructor-title">Instructor</h3>
+
+          <div class="instructor-item">
+            <div class="instructor-avatar">
+              <i class="bi bi-person"></i>
+            </div>
+
+            <div class="instructor-info">
+              {% if teacher %}
+              <h4>{{ teacher.name }}</h4>
+              {% else %}
+              <h4> No instructor assigned </h4>
+              {% endif %}
+
+              <p>Senior Engineer with 10 years of teaching experience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

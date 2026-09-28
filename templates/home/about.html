@@ -1,0 +1,102 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %} LearnHub - Online
+Learning 
+{% endblock %} 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+{% block content %}
+
+<section class="about-section">
+  <div class="container">
+    <div class="about-intro">
+      <h1 class="about-title">Empowering Learners Worldwide</h1>
+
+      <p class="about-description">
+        Founded on the principle that quality education should be accessible to
+        all, LearnHub has grown from a small collective of educators into a
+        global platform. Our commitment to academic excellence drives everything
+        we do, ensuring that every learner has the tools they need to succeed in
+        a rapidly evolving world.
+      </p>
+    </div>
+
+    <div class="about-image">
+      <img
+        src="{% static 'images/About.png' %}"
+        alt="LearnHub online learning" />
+    </div>
+
+    <div class="section-divider"></div>
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="container">
+    <div class="section-heading">
+      <h2>How LearnHub Works</h2>
+
+      <p>A streamlined path to advancing your education.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="how-card">
+          <div class="how-icon">
+            <i class="bi bi-person-plus"></i>
+          </div>
+          <h3>Sign up</h3>
+          <p>
+            Create your academic profile and set your learning objectives in
+            minutes.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="how-card">
+          <div class="how-icon">
+            <i class="bi bi-book"></i>
+          </div>
+          <h3>Choose a course</h3>
+          <p>
+            Browse our curated curriculum and enroll in programs led by industry
+            experts.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12">
+        <div class="how-card">
+          <div class="how-icon">
+            <i class="bi bi-mortarboard"></i>
+          </div>
+          <h3>Start learning</h3>
+          <p>
+            Engage with interactive content, complete assignments, and earn
+            certifications.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+  </div>
+</section>
+
+<section class="about-cta">
+  <div class="container">
+    <div class="about-cta-content">
+      <h2>Ready to start your journey?</h2>
+      <p>
+        Join thousands of learners elevating their careers through rigorous,
+        structured education.
+      </p>
+      <a href="{% url 'courses' %}" class="btn-primary-custom">
+        Explore Courses
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

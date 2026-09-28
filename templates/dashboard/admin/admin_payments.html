@@ -1,0 +1,193 @@
+{% extends "dashboard/admin_dashboard_base.html" %} {% load static %} {% block
+title %}Payment Management{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+{% endblock %} {% block content %}
+<div class="container-fluid admin-payments">
+  <!-- Page Header -->
+  <div class="payment-page-header">
+    <div>
+      <h2>Payment Management</h2>
+      <p>Review and manage student course payments.</p>
+    </div>
+  </div>
+
+  <!-- Payment Management Card -->
+  <div class="payment-management-card">
+    <!-- Toolbar -->
+    <div class="payment-toolbar">
+      <form method="GET" class="payment-toolbar">
+        <div class="payment-search">
+          <i class="bi bi-search"></i>
+
+          <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search payments..." />
+        </div>
+        <button type="submit">Search</button>
+
+        <select
+          name="status"
+          class="payment-filter"
+          onchange="this.form.submit()">
+          <option value="" {% if status="" ="" %}selected{% endif %}>
+            All Status
+          </option>
+
+          <option
+            value="pending"
+            {%
+            if
+            status=""
+            ="pending"
+            %}selected{%
+            endif
+            %}>
+            Pending
+          </option>
+
+          <option
+            value="accepted"
+            {%
+            if
+            status=""
+            ="accepted"
+            %}selected{%
+            endif
+            %}>
+            Accepted
+          </option>
+        </select>
+      </form>
+    </div>
+
+    <!-- Payment Table -->
+    <div class="payment-table-wrapper">
+      <table class="payment-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Payment Type</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for payment in payments %}
+
+          <tr>
+            <!-- Student -->
+            <td>
+              <div class="student-name">
+                <span> {{ payment.student.name }} </span>
+              </div>
+            </td>
+
+            <!-- Course -->
+            <td>
+              <span class="subject-badge"> {{ payment.course.name }}</span>
+            </td>
+
+            <!-- Payment Type -->
+            <td>
+              <span class="payment-type">
+                {{ payment.get_payment_type_display }}
+              </span>
+            </td>
+
+            <!-- Transaction ID -->
+            <td>
+              <span class="transaction-id"> {{ payment.transaction_id }} </span>
+            </td>
+
+            <!-- Receipt -->
+            <td>
+              {% if payment.receipt_image %}
+
+              <a
+                href="{{ payment.receipt_image.url }}"
+                target="_blank"
+                class="receipt-link">
+                <i class="bi bi-receipt"></i>
+                View Receipt
+              </a>
+
+              {% else %}
+
+              <span> No Receipt </span>
+
+              {% endif %}
+            </td>
+
+            <!-- Status -->
+            <td>
+              {% if payment.status == "accepted" %}
+
+              <span class="status-badge accepted">
+                <i class="bi bi-check-circle"></i>
+                Accepted
+              </span>
+
+              {% else %}
+
+              <span class="status-badge pending">
+                <i class="bi bi-clock"></i>
+                Pending
+              </span>
+
+              {% endif %}
+            </td>
+
+            <!-- Action -->
+            <td>
+              <div class="payment-actions">
+                {% if payment.status == "pending" %}
+
+                <a
+                  href="{% url 'accept_payment' payment.id %}"
+                  class="payment-action accept"
+                  title="Accept Payment">
+                  <i class="bi bi-check-lg"></i>
+                </a>
+
+                {% else %}
+
+                <span class="text-success"> Accepted </span>
+
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+
+          {% empty %}
+
+          <tr>
+            <td colspan="7" class="empty-payments">No payments found.</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% if payment.status == "pending" %}
+
+<a
+  href="{% url 'accept_payment' payment.id %}"
+  class="payment-action accept"
+  title="Accept Payment">
+  <i class="bi bi-check-lg"></i>
+</a>
+
+{% else %}
+
+<span class="text-success"> Accepted </span>
+
+{% endif %}

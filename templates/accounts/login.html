@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - Login
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="auth-body">
+  <div class="auth-page-wrapper">
+    <div class="auth-card">
+      <div class="row g-0 align-items-stretch">
+        <div class="col-lg-6 auth-left-panel">
+          <img
+            src="{% static 'images/Login.png' %}"
+            alt="Person sitting at desk working on laptop"
+            class="auth-illustration-img" />
+        </div>
+
+        <div class="col-lg-6 auth-right-panel d-flex align-items-center">
+          <div class="auth-form-box">
+            <h1 class="auth-title">Welcome back</h1>
+
+            <p class="auth-subtitle">
+              Please enter your details to access your account.
+            </p>
+
+            <form action="{% url 'login' %}" method="POST" class="auth-form">
+              {% csrf_token %}
+
+              <!-- Email -->
+
+              <div class="form-group-custom">
+                <label for="email" class="form-label-custom">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input-custom"
+                  required />
+              </div>
+
+              <!-- Password -->
+
+              <div class="form-group-custom">
+                <label for="password" class="form-label-custom">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-input-custom"
+                  required />
+              </div>
+
+              <div class="form-group-custom">
+                <label for="role" class="form-label-custom"> Role </label>
+
+                <select
+                  id="role"
+                  name="role"
+                  class="form-input-custom"
+                  required>
+                  <option value="" disabled selected>Select your role</option>
+
+                  <option value="student">Student</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-auth-primary">Login</button>
+            </form>
+            <div class="auth-footer text-center">
+              Don't have an account?
+
+              <a href="{% url 'register' %}"> Register </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

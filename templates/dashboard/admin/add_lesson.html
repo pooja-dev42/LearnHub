@@ -1,0 +1,82 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Lesson Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="mb-4">
+    <h2>Add Lesson</h2>
+    <p>Create a new lesson for a subject.</p>
+  </div>
+
+  <div class="card p-4">
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Subject -->
+      <div class="mb-3">
+        <label class="form-label"> Subject </label>
+
+        <select name="subject" class="form-select" required>
+          <option value="">Select Subject</option>
+
+          {% for subject in subjects %}
+
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Lesson Name -->
+      <div class="mb-3">
+        <label class="form-label"> Lesson Name </label>
+
+        <input
+          type="text"
+          name="lesson_name"
+          class="form-control"
+          placeholder="Enter lesson name"
+          required />
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label"> Description </label>
+
+        <textarea
+          name="description"
+          class="form-control"
+          rows="4"
+          placeholder="Enter lesson description"></textarea>
+      </div>
+
+      <!-- Video Link -->
+      <div class="mb-4">
+        <label class="form-label"> Lesson Video Link </label>
+
+        <input
+          type="url"
+          name="link"
+          class="form-control"
+          placeholder="https://www.youtube.com/watch?v=..."
+          required />
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary">Add Lesson</button>
+
+        <a href="{% url 'admin_lessons' %}" class="btn btn-secondary">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

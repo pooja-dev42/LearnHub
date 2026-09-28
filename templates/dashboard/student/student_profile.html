@@ -1,0 +1,171 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - My Profile
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/profile.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="page-header">
+        <h1>My Profile</h1>
+
+        <p>
+            Manage your personal information and account details.
+        </p>
+    </div>
+
+
+    <div class="profile-card">
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="profile-avatar-container">
+
+                <div class="profile-avatar">
+
+                    <img
+                        src="{% static 'images/avatar.png' %}"
+                        alt="Student Avatar"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-heading">
+
+                <h2>{{ student.name }}</h2>
+
+                <p>Student</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="profile-section">
+
+            <form
+                method="POST"
+                class="profile-form"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="profile-info-grid">
+
+                    <!-- Name -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ student.name }}"
+                            class="edit-input"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ student.email }}"
+                            class="edit-input"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Phone -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            value="{{ student.phone }}"
+                            class="edit-input"
+                        >
+
+                    </div>
+
+
+                    <!-- Role -->
+
+                    <div class="profile-info-item">
+
+                        <label class="info-label">
+                            Role
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Student"
+                            class="edit-input"
+                            disabled
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="profile-actions">
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        <i class="bi bi-check-lg"></i>
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

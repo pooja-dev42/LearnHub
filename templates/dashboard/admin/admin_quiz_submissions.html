@@ -1,0 +1,205 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+Quiz Submissions
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid admin-quiz-submissions">
+
+    <!-- Page Header -->
+    <div class="admin-dashboard-header">
+        <div>
+            <h2>Quiz Submissions</h2>
+            <p>View student quiz submissions and grading information.</p>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="admin-filter-card">
+
+        <form method="GET" class="admin-filter-form">
+
+            <div class="admin-filter-search">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search student, quiz or subject..."
+                >
+            </div>
+
+            <div class="admin-filter-select">
+                <select name="subject" onchange="this.form.submit()">
+                    <option value="">All Subjects</option>
+
+                    {% for subject in subjects %}
+                        <option
+                            value="{{ subject.id }}"
+                            {% if subject_id == subject.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ subject.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="admin-filter-select">
+                <select name="status" onchange="this.form.submit()">
+                    <option value="">All Status</option>
+
+                    <option
+                        value="pending"
+                        {% if status == "pending" %}selected{% endif %}
+                    >
+                        Pending
+                    </option>
+
+                    <option
+                        value="graded"
+                        {% if status == "graded" %}selected{% endif %}
+                    >
+                        Graded
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="admin-filter-btn">
+                <i class="bi bi-search"></i>
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- Submission Table -->
+    <div class="admin-table-card">
+
+        <div class="table-responsive">
+
+            <table class="admin-table">
+
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Quiz</th>
+                        <th>Subject</th>
+                        <th>Submitted</th>
+                        <th>Score</th>
+                        <th>Graded By</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for submission in submissions %}
+
+                    <tr>
+
+                        <td>
+                            <div class="student-name">
+    
+
+                                <span>
+                                    {{ submission.student.name }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            {{ submission.quiz.quiz_name }}
+                        </td>
+
+                        <td><div class ="subject-badge">
+                            {{ submission.quiz.subject.name }}
+                        </div>
+                            
+                        </td>
+
+                        <td>
+                            {{ submission.submitted_at|date:"M d, Y" }}
+                        </td>
+
+                        <td>
+                            {% if submission.score is not None %}
+                                <strong>{{ submission.score }}</strong>
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if submission.graded_by %}
+                                {{ submission.graded_by.name }}
+                            {% else %}
+                                <span class="text-muted">
+                                    Not graded
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+
+                            {% if submission.score is not None %}
+
+                                <span class="status-badge status-accepted">
+                                    <i class="bi bi-check-circle"></i>
+                                    Graded
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    <i class="bi bi-clock"></i>
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            <a
+                                href="{{ submission.answer_pdf.url }}"
+                                target="_blank"
+                                class="admin-action-btn"
+                                title="View Answer"
+                            >
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="8" class="admin-empty-state">
+                            No quiz submissions found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

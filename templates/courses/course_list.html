@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+LearnHub - Online Learning
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/course_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="catalog-section">
+    <div class="container">
+    <div class="text-center catalog-header">
+        <h1>Explore Courses</h1>
+        <p>
+            Discover top-rated programs designed to accelerate your career
+            in technology, business, and design.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="catalog-search-wrapper mx-auto">
+            <form method="GET" action="{% url 'courses' %}">
+                <div class="search-box-large">
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search courses..."
+                    >
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Course Cards -->
+    <div class="row g-5">
+
+        {% for course in courses %}
+
+        <div class="col-md-4">
+            <div class="course-card">
+
+                <div class="course-img">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" alt="{{ course.name }}">
+                    {% endif %}
+                </div>
+
+                <div class="course-content">
+                    <h3>{{ course.name }}</h3>
+
+                    <p>{{ course.description }}</p>
+
+                    <a
+                        href="{% url 'course_detail' course.id %}"
+                        class="btn btn-outline-custom w-100">
+                        View Details
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class="col-12 text-center">
+            <p>
+                No courses found{% if search %} for "{{ search }}"{% endif %}.
+            </p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</main>
+
+{% endblock %}

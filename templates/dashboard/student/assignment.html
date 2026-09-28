@@ -1,0 +1,239 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - Assignments
+{% endblock %}
+
+{% block extra_css %}
+    <link
+        rel="stylesheet"
+        href="{% static 'css/student.css' %}"
+    >
+{% endblock %}
+
+{% block content %}
+
+<div class="assignment-page">
+
+    <!-- Page Header -->
+
+    <div class="page-header">
+
+        <h1>Assignments</h1>
+
+        <p>
+            Complete your assignments and submit your answers for grading.
+        </p>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filter-card">
+
+        <form method="get" class="filter-row">
+
+            <!-- Search -->
+
+            <div class="filter-search">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search assignment or subject..."
+                    value="{{ search }}"
+                >
+
+            </div>
+
+
+            <!-- Subject Filter -->
+
+            <div class="filter-group">
+
+                <select name="subject">
+
+                    <option value="">
+                        All Subjects
+                    </option>
+
+                    {% for subject in subjects %}
+
+                        <option
+                            value="{{ subject.id }}"
+                            {% if subject_id == subject.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ subject.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Status Filter -->
+
+            <div class="filter-group">
+
+                <select name="status">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option
+                        value="pending"
+                        {% if status == "pending" %}
+                            selected
+                        {% endif %}
+                    >
+                        Pending
+                    </option>
+
+                    <option
+                        value="submitted"
+                        {% if status == "submitted" %}
+                            selected
+                        {% endif %}
+                    >
+                        Submitted
+                    </option>
+
+                    <option
+                        value="graded"
+                        {% if status == "graded" %}
+                            selected
+                        {% endif %}
+                    >
+                        Graded
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Search Button -->
+
+            <div class="filter-actions">
+
+                <button
+                    type="submit"
+                    class="filter-btn"
+                >
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Assignment Table -->
+
+    <div class="assignment-card">
+
+        <div class="table-responsive">
+
+            <table class="assignment-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Assignment</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for assignment in assignments %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ assignment.assignment_name }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ assignment.subject.name }}
+                            </td>
+
+                            <td>
+
+                                {% if assignment.latest_submission %}
+
+                                    {% if assignment.latest_submission.score is not None %}
+
+                                        <span class="status status-graded">
+                                            Graded
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status status-submitted">
+                                            Submitted
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="status status-pending">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{% url 'assignment_detail' assignment_id=assignment.id %}"
+                                    class="details-btn"
+                                >
+                                    Details
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="4">
+                                No assignments found.
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

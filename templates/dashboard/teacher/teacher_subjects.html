@@ -1,0 +1,133 @@
+{% extends "dashboard/teacher_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - My Subjects
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="teacher-subjects">
+  <div class="page-header">
+    <div>
+      <h1>My Subjects</h1>
+      <p>View your assigned subjects and learning content.</p>
+    </div>
+  </div>
+
+  <div class="subjects-grid">
+    {% for item in subjects %}
+
+    <div class="subject-card">
+      <div class="subject-card-header">
+        <div class="subject-icon">
+          <i class="bi bi-book"></i>
+        </div>
+
+        <div class="subject-title">
+          <h2>{{ item.subject.name }}</h2>
+          <span>Subject</span>
+        </div>
+      </div>
+
+      {% if item.subject.description %}
+      <p class="subject-description">{{ item.subject.description }}</p>
+      {% endif %}
+
+      <div class="content-section">
+        <div class="content-section-header">
+          <h3><i class="bi bi-play-circle"></i>Lessons</h3>
+          <span class="content-count"> {{ item.lessons|length }} </span>
+        </div>
+
+        <div class="content-list">
+          {% for lesson in item.lessons %}
+
+          <div class="content-item">
+            <div class="content-item-info">
+              <i class="bi bi-play-circle"></i>
+              <span>{{ lesson.lesson_name }}</span>
+            </div>
+
+            {% if lesson.link %}
+            <a href="{{ lesson.link }}" target="_blank" class="content-link">
+              View
+            </a>
+            {% endif %}
+          </div>
+
+          {% empty %}
+
+          <p class="empty-content">No lessons yet.</p>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="content-section">
+        <div class="content-section-header">
+          <h3><i class="bi bi-question-circle"></i>Quizzes</h3>
+          <span class="content-count"> {{ item.quizzes|length }} </span>
+        </div>
+
+        <div class="content-list">
+          {% for quiz in item.quizzes %}
+
+          <div class="content-item">
+            <div class="content-item-info">
+              <i class="bi bi-question-circle"></i>
+              <span>{{ quiz.quiz_name }}</span>
+            </div>
+            <small> Passing Score: {{ quiz.passing_score }} </small>
+          </div>
+
+          {% empty %}
+          <p class="empty-content">No quizzes yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="content-section">
+        <div class="content-section-header">
+          <h3>
+            <i class="bi bi-file-earmark-text"></i>
+            Assignments
+          </h3>
+
+          <span class="content-count"> {{ item.assignments|length }} </span>
+        </div>
+
+        <div class="content-list">
+          {% for assignment in item.assignments %}
+
+          <div class="content-item">
+            <div class="content-item-info">
+              <i class="bi bi-file-earmark-text"></i>
+              <span>{{ assignment.assignment_name }}</span>
+            </div>
+            <small> Passing Score: {{ assignment.passing_score }} </small>
+          </div>
+
+          {% empty %}
+          <p class="empty-content">No assignments yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% empty %}
+    <div class="empty-subjects">
+      <div class="empty-subject-icon">
+        <i class="bi bi-book"></i>
+      </div>
+      <h3>No Subjects Assigned</h3>
+      <p>You have not been assigned any subjects yet.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

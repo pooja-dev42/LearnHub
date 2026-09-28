@@ -1,0 +1,106 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Edit Assignment{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}<div class="container-fluid">
+  <div class="mb-4">
+    <h2>Edit Assignment</h2>
+    <p>Update assignment information.</p>
+  </div>
+
+  <div class="card p-4">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Subject -->
+      <div class="mb-3">
+        <label class="form-label"> Subject </label>
+
+        <select name="subject" class="form-select" required>
+          {% for subject in subjects %}
+
+          <option
+            value="{{ subject.id }}"
+            {%
+            if
+            subject.id=""
+            ="assignment.subject.id"
+            %}
+            selected
+            {%
+            endif
+            %}>
+            {{ subject.name }}
+          </option>
+
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Assignment Name -->
+      <div class="mb-3">
+        <label class="form-label"> Assignment Name </label>
+
+        <input
+          type="text"
+          name="assignment_name"
+          class="form-control"
+          value="{{ assignment.assignment_name }}"
+          required />
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label"> Description </label>
+
+        <textarea name="description" class="form-control" rows="4">
+{{ assignment.description }}</textarea
+        >
+      </div>
+
+      <!-- Passing Score -->
+      <div class="mb-3">
+        <label class="form-label"> Passing Score </label>
+
+        <input
+          type="number"
+          name="passing_score"
+          class="form-control"
+          value="{{ assignment.passing_score }}"
+          min="0"
+          max="100"
+          required />
+      </div>
+
+      <!-- Question PDF -->
+      <div class="mb-4">
+        <label class="form-label"> Question PDF </label>
+
+        <input
+          type="file"
+          name="question_pdf"
+          class="form-control"
+          accept=".pdf" />
+
+        {% if assignment.question_pdf %}
+        <small class="text-muted">
+          Current file: {{ assignment.question_pdf.name }}
+        </small>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+
+      <a href="{% url 'admin_assignments' %}" class="btn btn-secondary">
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

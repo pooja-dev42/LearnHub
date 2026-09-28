@@ -1,0 +1,75 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - Certificates
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="certificates-page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>My Certificates</h1>
+        <p>A verified record of your academic achievements and completed coursework.</p>
+    </div>
+
+    <!-- Certificates Grid -->
+    <div class="certificates-grid">
+        {% for certificate in certificates %}
+        <div class="certificate-card">
+            <!-- Certificate Preview -->
+            <div class="certificate-preview">
+                <div class="certificate-border">
+                    <div class="certificate-inner">
+                        <!-- Logo -->
+                        <div class="certificate-logo">LEARNHUB</div>
+
+                        <!-- Certificate Title -->
+                        <div class="certificate-title">
+                            <span>CERTIFICATE</span>
+                            <h2>OF COMPLETION</h2>
+                        </div>
+
+                        <!-- Certificate Text -->
+                        <p class="certificate-text">This certificate is proudly presented to</p>
+
+                        <!-- Student Name -->
+                        <h3 class="student-name">{{ certificate.student.name }}</h3>
+
+                        <!-- Completion Text -->
+                        <p class="certificate-text">for successfully completing the course</p>
+
+                        <!-- Course Name -->
+                        <h4 class="certificate-course">{{ certificate.course.name }}</h4>
+
+                        <!-- Certificate Details -->
+                        <div class="certificate-details">
+                            <div class="certificate-detail">
+                                <span>Issued</span>
+                                <strong>{{ certificate.issued_date|date:"F d, Y" }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Information -->
+            <div class="certificate-content">
+                <a href="{{ certificate.certificate_file.url }}" target="_blank" class="download-btn">
+                    <i class="bi bi-download"></i> Download Certificate
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-certificates">
+            <h3>No certificates yet</h3>
+            <p>You have not received any certificates yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

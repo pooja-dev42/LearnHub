@@ -1,0 +1,64 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - My Courses
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="welcome-heading">
+    <h1>My Courses</h1>
+    <p>Continue your learning journey across enrolled subjects.</p>
+</div>
+
+<div class="courses-grid">
+    {% for enrollment in enrollments %}
+    <div class="course-card">
+        <div class="course-img">
+            {% if enrollment.course.image %}
+            <img src="{{ enrollment.course.image.url }}" alt="{{ enrollment.course.name }}" class="course-image">
+            {% else %}
+            <div class="course-image-placeholder">
+                <i class="bi bi-book"></i>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="course-card-body">
+            <h3>{{ enrollment.course.name }}</h3>
+            <p>{{ enrollment.course.description }}</p>
+
+            <div class="course-progress">
+                <div class="progress-header">
+                    <span>Course Progress</span>
+                    <strong>{{ enrollment.progress }}%</strong>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ enrollment.progress }}%;"></div>
+                </div>
+
+                <div class="progress-info">
+                    <span>{{ enrollment.completed_lessons }} of {{ enrollment.total_lessons }} lessons completed</span>
+                </div>
+            </div>
+
+            <a href="{% url 'course_learning' course_id=enrollment.course.id %}" class="btn-course btn-continue">
+                Continue Learning <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-5">
+        <i class="bi bi-book fs-1 text-muted"></i>
+        <h4 class="mt-3">No courses yet</h4>
+        <p class="text-muted">You have not enrolled in any courses yet.</p>
+        <a href="{% url 'courses' %}" class="btn btn-primary">Browse Courses</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

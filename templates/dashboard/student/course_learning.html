@@ -1,0 +1,133 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+LearnHub - {{ course.name }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="learning-page">
+    <div class="course-learning-header">
+        <div class="course-header-info">
+            <span class="course-label">MY COURSE</span>
+            <h1>{{ course.name }}</h1>
+            <p>{{ course.description }}</p>
+        </div>
+    </div>
+
+    <div class="learning-layout">
+        <aside class="lesson-sidebar">
+            <div class="sidebar-heading">
+                <h3>Course Content</h3>
+            </div>
+
+            {% for subject in subjects %}
+            <div class="subject-section">
+                <div class="subject-title">
+                    <i class="bi bi-book"></i>
+                    <span>{{ subject.name }}</span>
+                </div>
+
+                <div class="lesson-list">
+                    {% for item in lesson_data %}
+                        {% if item.lesson.subject_id == subject.id %}
+                            {% if item.locked %}
+                            <div class="lesson-item locked">
+                                <i class="bi bi-lock-fill"></i>
+                                <span>{{ item.lesson.lesson_name }}</span>
+                            </div>
+                            {% else %}
+                            <a href="?lesson={{ item.lesson.id }}" class="lesson-item {% if current_lesson.id == item.lesson.id %}active{% endif %}">
+                                {% if item.completed %}
+                                <i class="bi bi-check-circle-fill completed-icon"></i>
+                                {% else %}
+                                <i class="bi bi-play-circle"></i>
+                                {% endif %}
+                                <span>{{ item.lesson.lesson_name }}</span>
+                            </a>
+                            {% endif %}
+                        {% endif %}
+                    {% empty %}
+                    <p class="no-lessons">No lessons available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-subjects">
+                <i class="bi bi-book"></i>
+                <p>No subjects available.</p>
+            </div>
+            {% endfor %}
+        </aside>
+
+        <section class="lesson-content">
+            <div class="video-container">
+                {% if current_lesson %}
+                <iframe class="lesson-video" src="{{ current_lesson.embed_link }}" title="{{ current_lesson.lesson_name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                {% else %}
+                <div class="no-video">
+                    <i class="bi bi-play-circle"></i>
+                    <p>No lesson selected.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="lesson-information">
+                {% if current_lesson %}
+                <div class="lesson-header">
+                    <span class="lesson-label">CURRENT LESSON</span>
+                    <h2>{{ current_lesson.lesson_name }}</h2>
+                </div>
+
+                <p class="lesson-description">{{ current_lesson.description }}</p>
+
+                <div class="lesson-actions">
+                    {% if previous_lesson %}
+                    <a href="?lesson={{ previous_lesson.id }}" class="lesson-btn previous-btn">
+                        <i class="bi bi-arrow-left"></i> Previous
+                    </a>
+                    {% else %}
+                    <button type="button" class="lesson-btn previous-btn" disabled>
+                        <i class="bi bi-arrow-left"></i> Previous
+                    </button>
+                    {% endif %}
+
+                    {% if is_completed %}
+                    <button type="button" class="lesson-btn complete-btn completed-btn" disabled>
+                        <i class="bi bi-check-circle-fill"></i> Completed
+                    </button>
+                    {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="lesson_id" value="{{ current_lesson.id }}">
+                        <button type="submit" class="lesson-btn complete-btn">
+                            <i class="bi bi-check-lg"></i> Mark as Complete
+                        </button>
+                    </form>
+                    {% endif %}
+
+                    {% if next_lesson %}
+                    <a href="?lesson={{ next_lesson.id }}" class="lesson-btn next-btn">
+                        Next Lesson <i class="bi bi-arrow-right"></i>
+                    </a>
+                    {% else %}
+                    <button type="button" class="lesson-btn next-btn" disabled>
+                        Next Lesson <i class="bi bi-arrow-right"></i>
+                    </button>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="empty-lesson">
+                    <h2>No lesson selected</h2>
+                    <p>This course does not have lessons yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

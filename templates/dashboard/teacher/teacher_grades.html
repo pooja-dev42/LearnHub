@@ -1,0 +1,131 @@
+{% extends "dashboard/teacher_dashboard_base.html" %}
+{% load static %}
+{% block title %}
+LearnHub - Teacher Grades
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="teacher-grades">
+  <div class="page-header">
+    <h1>Grades</h1>
+    <p>View and manage the grades given to your students.</p>
+  </div>
+
+  <!-- SEARCH AND FILTERS -->
+  <div class="filter-card">
+    <form method="GET" class="filter-form">
+
+      <div class="filter-group search-group">
+        <label for="search">Search</label>
+        <input
+          type="text"
+          id="search"
+          name="search"
+          value="{{ search }}"
+          placeholder="Search student or subject...">
+      </div>
+
+      <div class="filter-group">
+        <label for="subject">Subject</label>
+
+        <select id="subject" name="subject">
+          <option value="">All Subjects</option>
+
+          {% for subject in subjects %}
+          <option
+            value="{{ subject.id }}"
+            {% if subject_id == subject.id|stringformat:"s" %}selected{% endif %}>
+            {{ subject.name }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button type="submit" class="filter-btn">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="grades-section">
+    <div class="grades-card">
+      <div class="table-wrapper">
+        <table class="grades-table">
+
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Subject</th>
+              <th>Quiz</th>
+              <th>Assignment</th>
+              <th>Overall</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in grades %}
+            <tr>
+              <td>{{ item.student.name }}</td>
+              <td>{{ item.subject.name }}</td>
+
+              <td>
+                {% if item.quiz_score is not None %}
+                {{ item.quiz_score|floatformat:0 }}%
+                {% else %}
+                Not graded yet
+                {% endif %}
+              </td>
+
+              <td>
+                {% if item.assignment_score is not None %}
+                {{ item.assignment_score|floatformat:0 }}%
+                {% else %}
+                Not graded yet
+                {% endif %}
+              </td>
+
+              <td>
+                {% if item.overall is not None %}
+                <strong>{{ item.overall|floatformat:0 }}%</strong>
+                {% else %}
+                -
+                {% endif %}
+              </td>
+
+              <td>
+                {% if item.grade == "A+" %}
+                <span class="grade-badge grade-aplus">A+</span>
+                {% elif item.grade == "A" %}
+                <span class="grade-badge grade-a">A</span>
+                {% elif item.grade == "B+" %}
+                <span class="grade-badge grade-bplus">B+</span>
+                {% elif item.grade == "B" %}
+                <span class="grade-badge grade-b">B</span>
+                {% elif item.grade == "C" %}
+                <span class="grade-badge grade-c">C</span>
+                {% elif item.grade == "F" %}
+                <span class="grade-badge grade-f">F</span>
+                {% else %}
+                -
+                {% endif %}
+              </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+              <td colspan="6">No grades found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

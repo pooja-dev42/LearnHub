@@ -1,0 +1,251 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - Quiz
+{% endblock %}
+
+{% block extra_css %}
+    <link
+        rel="stylesheet"
+        href="{% static 'css/student.css' %}"
+    >
+{% endblock %}
+
+{% block content %}
+
+<div class="quiz-page">
+
+    <!-- Page Header -->
+
+    <div class="page-header">
+
+        <h1>Quizzes</h1>
+
+        <p>
+            Complete your quizzes and submit your answers for grading.
+        </p>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filter-card">
+
+        <form method="get" class="filter-row">
+
+            <!-- Search -->
+
+            <div class="filter-search">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search quiz or subject..."
+                    value="{{ search }}"
+                >
+
+            </div>
+
+
+            <!-- Subject Filter -->
+
+            <div class="filter-group">
+
+                <select name="subject">
+
+                    <option value="">
+                        All Subjects
+                    </option>
+
+                    {% for subject in subjects %}
+
+                        <option
+                            value="{{ subject.id }}"
+                            {% if subject_id == subject.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ subject.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Status Filter -->
+
+            <div class="filter-group">
+
+                <select name="status">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option
+                        value="pending"
+                        {% if status == "pending" %}
+                            selected
+                        {% endif %}
+                    >
+                        Pending
+                    </option>
+
+                    <option
+                        value="submitted"
+                        {% if status == "submitted" %}
+                            selected
+                        {% endif %}
+                    >
+                        Submitted
+                    </option>
+
+                    <option
+                        value="graded"
+                        {% if status == "graded" %}
+                            selected
+                        {% endif %}
+                    >
+                        Graded
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Search Button -->
+
+            <div class="filter-actions">
+
+                <button
+                    type="submit"
+                    class="filter-btn"
+                >
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Quiz Table -->
+
+    <div class="quiz-card">
+
+        <div class="table-responsive">
+
+            <table class="quiz-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for quiz in quizzes %}
+
+                        <tr>
+
+                            <!-- Quiz Name -->
+
+                            <td>
+                                <strong>
+                                    {{ quiz.quiz_name }}
+                                </strong>
+                            </td>
+
+
+                            <!-- Subject -->
+
+                            <td>
+                                {{ quiz.subject.name }}
+                            </td>
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                {% if quiz.latest_submission %}
+
+                                    {% if quiz.latest_submission.score is not None %}
+
+                                        <span class="status status-graded">
+                                            Graded
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status status-submitted">
+                                            Submitted
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="status status-pending">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Action -->
+
+                            <td>
+
+                                <a
+                                    href="{% url 'quiz_detail' quiz_id=quiz.id %}"
+                                    class="details-btn"
+                                >
+                                    Details
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="4">
+                                No quizzes found.
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

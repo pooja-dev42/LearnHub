@@ -1,0 +1,85 @@
+{% extends "dashboard/admin_dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Certificate Management{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid admin-certificates">
+  <div class="certificate-page-header">
+    <div>
+      <h2>Certificate Management</h2>
+      <p>Manage certificates issued to LearnHub students.</p>
+    </div>
+    <a href="{% url 'add_certificate' %}" class="add-certificate-btn">
+      <i class="bi bi-plus-lg"></i> Add Certificate
+    </a>
+  </div>
+
+  <div class="certificate-management-card">
+    <div class="certificate-toolbar">
+      <form method="GET" class="certificate-toolbar">
+        <div class="certificate-search">
+          <i class="bi bi-search"></i>
+          <input type="text" name="search" value="{{ search }}" placeholder="Search certificates...">
+        </div>
+        <button type="submit">Search</button>
+
+        <select name="course" class="certificate-filter" onchange="this.form.submit()">
+          <option value="" {% if course == "" %}selected{% endif %}>All Courses</option>
+          {% for course_item in courses %}
+          <option value="{{ course_item.id }}" {% if course == course_item.id|stringformat:"s" %}selected{% endif %}>
+            {{ course_item.name }}
+          </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    <div class="certificate-table-wrapper">
+      <table class="certificate-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Issued Date</th>
+            <th>Certificate</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for certificate in certificates %}
+          <tr>
+            <td><div class="student-name"><span>{{ certificate.student.name }}</span></div></td>
+            <td><div class="subject-badge">{{ certificate.course.name }}</div></td>
+            <td><div class="issued-date">{{ certificate.issued_date|date:"d M Y" }}</div></td>
+            <td>
+              {% if certificate.certificate_file %}
+              <a href="{{ certificate.certificate_file.url }}" class="pdf-link" target="_blank">
+                <i class="bi bi-file-earmark-pdf"></i> View Certificate
+              </a>
+              {% else %}
+              <span>No certificate</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="certificate-actions">
+                <a href="{% url 'edit_certificate' certificate.id %}" class="certificate-action edit" title="Edit"><i class="bi bi-pencil"></i></a>
+                <a href="{% url 'delete_certificate' certificate.id %}" class="certificate-action delete" title="Delete" onclick="return confirm('Are you sure you want to delete this certificate?');"><i class="bi bi-trash"></i></a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="empty-certificates">No certificates found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

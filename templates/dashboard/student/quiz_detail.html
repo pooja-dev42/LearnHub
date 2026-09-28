@@ -1,0 +1,103 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+    LearnHub - Quiz Details
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/student.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="quiz-detail-page">
+
+  <div class="page-header">
+    <a href="{% url 'quiz' %}" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Back to Quizzes
+    </a>
+  </div>
+
+  <!-- QUIZ CARD -->
+
+  <div class="quiz-detail-card">
+    <div class="quiz-detail-header">
+      <div>
+        <h1>{{ quiz.quiz_name }}</h1>
+      </div>
+    </div>
+
+    <div class="quiz-info">
+      <div class="info-item">
+        <span class="info-label"> Passing Score </span>
+        <strong> {{ quiz.passing_score }} </strong>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label"> Subject </span>
+        <strong> {{ quiz.subject.name }} </strong>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>Question Paper</h3>
+
+      <div class="pdf-box">
+        <div class="pdf-icon">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+        </div>
+
+        <div class="pdf-info">
+          <strong> {{ quiz.question_pdf.name }} </strong>
+
+          <span> Quiz Question Paper </span>
+        </div>
+        <a href="{{ quiz.question_pdf.url }}" class="download-btn">
+          <i class="bi bi-download"></i>
+          View PDF
+        </a>
+      </div>
+    </div>
+
+    <!-- ANSWER UPLOAD -->
+
+    <div class="quiz-section">
+      <h3>Submit Your Answer</h3>
+
+      <p class="section-description">
+        Upload your completed answer sheet in PDF format.
+      </p>
+
+      <form
+        action="{% url 'quiz_detail' quiz_id=quiz.id %}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="answer-form">
+        {% csrf_token %}
+        <div class="upload-box">
+          <h4>Upload Answer PDF</h4>
+
+          <input
+            type="file"
+            name="answer_pdf"
+            accept=".pdf"
+            class="file-input"
+            required
+            />
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="bi bi-send"></i>
+          Submit Answer
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

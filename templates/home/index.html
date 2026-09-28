@@ -1,0 +1,122 @@
+{% extends "base.html" %} {% load static %} {% block title %} LearnHub - Online
+Learning {% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %} {% block content %}
+
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <h1>
+            Learn Today.<br />
+            <span>Build Your Future.</span>
+          </h1>
+          <p>
+            LearnHub helps students learn skills through structured online
+            courses, guided by expert instructors in a professional academic
+            environment.
+          </p>
+          <div class="hero-buttons">
+            <a href="{% url 'courses' %}" class="btn btn-primary">
+              Explore Courses
+            </a>
+            <a href="{% url 'register' %}" class="btn btn-outline-secondary">
+              Join Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="hero-image-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
+            alt="Student learning online"
+            class="hero-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <div class="section-heading text-center">
+      <h2>Why Choose LearnHub</h2>
+      <p>
+        An environment designed for focused learning and academic excellence.
+      </p>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="bi bi-clock-fill"></i>
+              </div>
+              <h3>Learn at your pace</h3>
+              <p>
+                Access course materials anytime, anywhere. Structure your
+                learning journey around your schedule.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="bi bi-mortarboard-fill"></i>
+              </div>
+              <h3>Expert instructors</h3>
+              <p>
+                Learn from industry professionals and seasoned academics
+                dedicated to your success.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="feature-card feature-wide">
+              <div class="feature-icon">
+                <i class="bi bi-award-fill"></i>
+              </div>
+              <h3>Earn certificates</h3>
+              <p>
+                Receive verifiable digital credentials upon course completion to
+                showcase your skills to employers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="feature-card feature-tall">
+          <div class="feature-icon">
+            <i class="bi bi-bar-chart-fill"></i>
+          </div>
+          <h3>Track your progress</h3>
+          <p>
+            Comprehensive dashboards and analytics to monitor your academic
+            achievements and milestones.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container text-center">
+    <h2>Start learning today.</h2>
+    <p>
+      Join thousands of students achieving academic excellence and building
+      their futures with LearnHub.
+    </p>
+    <a href="{% url 'courses' %}" class="btn btn-primary"> Explore Courses </a>
+  </div>
+</section>
+{% endblock %}
